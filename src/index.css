@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-gold: #D4AF37;
+    --color-gold-bright: #F5D76E;
+    --color-gold-soft: #C9A227;
+  }
+
+  * {
+    border-color: rgba(212, 175, 55, 0.12);
+  }
+
+  body {
+    background-color: #000000;
+    color: #E2E8F0;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom subtle dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #222222;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+  }
+}
+
+/* Luxury gold text gradients */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF6D6 0%, #F5D76E 30%, #D4AF37 70%, #997D20 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(90deg, #D4AF37 0%, #FFFFFF 50%, #D4AF37 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Glassmorphic panels */
+.glass-panel {
+  background: rgba(10, 10, 10, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 20px 0 rgba(212, 175, 55, 0.03);
+}
+
+.glass-panel-glow {
+  background: rgba(12, 12, 12, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.9), 0 0 25px -2px rgba(212, 175, 55, 0.15);
+}
+
+/* Gold border glow utility */
+.gold-glow-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gold-glow-hover:hover {
+  border-color: rgba(245, 215, 110, 0.6);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+}
+
+/* Film grain / ambient texture overlay */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+}
+
+/* Mask image utilities */
+.mask-radial {
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+}
+
+.mask-fade-bottom {
+  mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+}
