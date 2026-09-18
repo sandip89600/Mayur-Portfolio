@@ -20,22 +20,21 @@ export default function ChartBackground() {
 
     window.addEventListener('resize', handleResize);
 
-    // Candlestick generator
     const candleWidth = 14;
-    const candleSpacing = 22;
-    const totalCandles = Math.ceil(width / candleSpacing) + 50;
+    const candleSpacing = 24;
+    const totalCandles = Math.ceil(width / candleSpacing) + 40;
 
     let currentPrice = height * 0.52;
     let trend = 0;
     const candles = [];
 
-    // Pre-populate candle history
+    // Initialize candle series
     for (let i = 0; i < totalCandles; i++) {
-      if (Math.random() < 0.08) {
-        trend = (Math.random() - 0.49) * 2;
+      if (Math.random() < 0.09) {
+        trend = (Math.random() - 0.49) * 2.2;
       }
       
-      const change = (Math.random() - 0.47 + trend * 0.15) * 16;
+      const change = (Math.random() - 0.47 + trend * 0.15) * 18;
       const isBullish = change >= 0;
       const open = currentPrice;
       const close = open - change;
@@ -46,7 +45,7 @@ export default function ChartBackground() {
       const lowerWick = Math.random() * 12;
       const high = bodyTop - upperWick;
       const low = bodyTop + bodyHeight + lowerWick;
-      const volume = 8 + Math.random() * 32;
+      const volume = 8 + Math.random() * 30;
 
       candles.push({
         open,
@@ -60,29 +59,26 @@ export default function ChartBackground() {
       });
 
       currentPrice = close;
-      // Keep price bound in middle band
-      if (currentPrice < height * 0.25) currentPrice = height * 0.35;
-      if (currentPrice > height * 0.75) currentPrice = height * 0.65;
+      if (currentPrice < height * 0.22) currentPrice = height * 0.32;
+      if (currentPrice > height * 0.78) currentPrice = height * 0.68;
     }
 
-    // Scroll offset (moves Right -> Left)
     let scrollOffset = 0;
-    const scrollSpeed = 0.45; // Pixels per frame for smooth institutional glide
+    const scrollSpeed = 0.5; // Smooth continuous glide from RIGHT to LEFT
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Pure dark base
+      // 1. Pure dark backdrop
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Subtle institutional grid
+      // 2. Subtle market grid
       const gridXSpacing = 90;
       const gridYSpacing = 60;
       ctx.strokeStyle = 'rgba(212, 175, 55, 0.035)';
       ctx.lineWidth = 1;
 
-      // Vertical grid lines
       const gridOffset = scrollOffset % gridXSpacing;
       for (let x = -gridOffset; x < width + gridXSpacing; x += gridXSpacing) {
         ctx.beginPath();
@@ -91,24 +87,17 @@ export default function ChartBackground() {
         ctx.stroke();
       }
 
-      // Horizontal price level grid lines
       for (let y = 0; y < height; y += gridYSpacing) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
-
-        // Very subtle price labels at right edge
-        ctx.fillStyle = 'rgba(212, 175, 55, 0.12)';
-        ctx.font = '9px "JetBrains Mono", monospace';
-        const simulatedPrice = ((height - y) * 1.5 + 24000).toFixed(1);
-        ctx.fillText(simulatedPrice, width - 48, y - 4);
       }
 
-      // 3. Subtle horizontal Support & Resistance Key Levels
-      [0.32, 0.48, 0.68].forEach((ratio, idx) => {
+      // 3. Subtle dashed support/resistance price levels
+      [0.3, 0.5, 0.7].forEach((ratio, idx) => {
         const y = height * ratio;
-        ctx.strokeStyle = idx === 1 ? 'rgba(245, 215, 110, 0.08)' : 'rgba(212, 175, 55, 0.05)';
+        ctx.strokeStyle = idx === 1 ? 'rgba(0, 210, 255, 0.07)' : 'rgba(212, 175, 55, 0.05)';
         ctx.setLineDash([6, 6]);
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -117,7 +106,7 @@ export default function ChartBackground() {
       });
       ctx.setLineDash([]);
 
-      // 4. Draw continuous Moving Average & glowing chart lines
+      // 4. Moving Average Colorful Trend Line
       ctx.beginPath();
       let firstPoint = true;
       for (let i = 0; i < candles.length; i++) {
@@ -133,26 +122,32 @@ export default function ChartBackground() {
           ctx.lineTo(x, avgY);
         }
       }
-      ctx.strokeStyle = 'rgba(245, 215, 110, 0.14)';
-      ctx.lineWidth = 1.5;
-      ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
-      ctx.shadowBlur = 8;
+      
+      // Gradient glowing trend stroke
+      const gradient = ctx.createLinearGradient(0, 0, width, 0);
+      gradient.addColorStop(0, 'rgba(0, 210, 255, 0.18)');
+      gradient.addColorStop(0.5, 'rgba(245, 215, 110, 0.22)');
+      gradient.addColorStop(1, 'rgba(155, 81, 224, 0.18)');
+
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 2;
+      ctx.shadowColor = 'rgba(0, 210, 255, 0.35)';
+      ctx.shadowBlur = 10;
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // 5. Draw animated Candlesticks (Moving RIGHT -> LEFT)
+      // 5. Draw Candlesticks moving RIGHT -> LEFT
       for (let i = 0; i < candles.length; i++) {
-        // x coordinate moves left as scrollOffset increases
         const x = width - (i * candleSpacing - scrollOffset);
         if (x < -candleSpacing || x > width + candleSpacing) continue;
 
         const c = candles[i];
 
-        // Color palette: Muted gold for bullish, dark charcoal/graphite for bearish
-        const bullishBody = 'rgba(245, 215, 110, 0.16)';
-        const bullishWick = 'rgba(212, 175, 55, 0.22)';
-        const bearishBody = 'rgba(60, 60, 60, 0.18)';
-        const bearishWick = 'rgba(90, 90, 90, 0.18)';
+        // Colorful subtle candle styling
+        const bullishBody = 'rgba(245, 215, 110, 0.18)';
+        const bullishWick = 'rgba(212, 175, 55, 0.25)';
+        const bearishBody = 'rgba(70, 70, 80, 0.16)';
+        const bearishWick = 'rgba(100, 100, 110, 0.18)';
 
         const bodyFill = c.isBullish ? bullishBody : bearishBody;
         const wickStroke = c.isBullish ? bullishWick : bearishWick;
@@ -165,34 +160,30 @@ export default function ChartBackground() {
         ctx.lineTo(x + candleWidth / 2, c.low);
         ctx.stroke();
 
-        // Candle Body
+        // Body
         ctx.fillStyle = bodyFill;
         ctx.fillRect(x, c.bodyTop, candleWidth, c.bodyHeight);
 
-        // Thin golden highlight border on bullish candles
         if (c.isBullish) {
-          ctx.strokeStyle = 'rgba(245, 215, 110, 0.28)';
+          ctx.strokeStyle = 'rgba(245, 215, 110, 0.35)';
           ctx.lineWidth = 0.8;
           ctx.strokeRect(x, c.bodyTop, candleWidth, c.bodyHeight);
         }
 
-        // Faint bottom Volume Bars
+        // Volume bar
         const volHeight = c.volume;
-        const volY = height - 30 - volHeight;
-        ctx.fillStyle = c.isBullish ? 'rgba(212, 175, 55, 0.08)' : 'rgba(50, 50, 50, 0.08)';
+        const volY = height - 25 - volHeight;
+        ctx.fillStyle = c.isBullish ? 'rgba(0, 210, 255, 0.08)' : 'rgba(70, 70, 70, 0.06)';
         ctx.fillRect(x, volY, candleWidth, volHeight);
       }
 
-      // Advance scroll position (Right -> Left movement)
       scrollOffset += scrollSpeed;
 
-      // When a candle moves past the left boundary, push new candle to the right
       if (scrollOffset >= candleSpacing) {
         scrollOffset -= candleSpacing;
         
-        // Generate next continuous candle
         const lastCandle = candles[0];
-        const change = (Math.random() - 0.48) * 16;
+        const change = (Math.random() - 0.48) * 18;
         const isBullish = change >= 0;
         const open = lastCandle.close;
         const close = open - change;
@@ -201,14 +192,14 @@ export default function ChartBackground() {
         const upperWick = Math.random() * 12;
         const lowerWick = Math.random() * 12;
 
-        candles.pop(); // Remove oldest candle off-screen
+        candles.pop();
         candles.unshift({
           open,
           close,
           high: bodyTop - upperWick,
           low: bodyTop + bodyHeight + lowerWick,
           isBullish,
-          volume: 8 + Math.random() * 32,
+          volume: 8 + Math.random() * 30,
           bodyTop,
           bodyHeight,
         });

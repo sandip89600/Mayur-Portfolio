@@ -1,8 +1,8 @@
 import React from 'react';
 import Hero from './components/sections/Hero';
+import TradingPlatforms from './components/sections/TradingPlatforms';
 import About from './components/sections/About';
-import Performance from './components/sections/Performance';
-import Contact from './components/sections/Contact';
+import Connect from './components/sections/Connect';
 import Footer from './components/sections/Footer';
 
 export default function App() {
@@ -18,9 +18,9 @@ export default function App() {
       {/* Main Experience Flow */}
       <main className="relative z-10">
         <Hero onNavigate={handleNavigate} />
+        <TradingPlatforms />
         <About />
-        <Performance />
-        <Contact />
+        <Connect />
       </main>
 
       {/* Minimal Footer */}

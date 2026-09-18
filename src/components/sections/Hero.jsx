@@ -5,20 +5,13 @@ import ChartBackground from '../ui/ChartBackground';
 import FloatingTicker from '../ui/FloatingTicker';
 import GoldButton from '../ui/GoldButton';
 import TopNav from '../ui/TopNav';
-import { FLOATING_CARDS } from '../../data/marketData';
-import { ArrowUpRight, BarChart2, ShieldCheck, Cpu } from 'lucide-react';
+import { ArrowUpRight, BarChart2, ShieldCheck, Cpu, Sparkles } from 'lucide-react';
 
 export default function Hero({ onNavigate }) {
-  const iconMap = {
-    "MARKET ANALYSIS": BarChart2,
-    "RISK DISCIPLINE": ShieldCheck,
-    "STRATEGY": Cpu,
-  };
-
   return (
     <section
       id="hero"
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#000000] pt-20 pb-32 md:py-0"
+      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-[#000000] pt-16 pb-28 md:py-0"
     >
       {/* 1. Minimal Top-Right Navigation: ONLY HOME & CONTACT */}
       <TopNav onNavigate={onNavigate} />
@@ -26,52 +19,58 @@ export default function Hero({ onNavigate }) {
       {/* 2. Realistic Animated Moving Candlestick Chart Background (Right -> Left) */}
       <ChartBackground />
 
-      {/* 3. Subtle Three.js Gold Dust Atmosphere (No Large 3D Orb) */}
+      {/* 3. Subtle Colorful Three.js Market Dust (Gold, Cyan, Blue, Purple, Green) */}
       <TradingScene />
 
-      {/* 4. Hero Content Container */}
-      <div className="relative z-20 max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 my-auto">
+      {/* 4. Primary Hero Screen Content */}
+      <div className="relative z-20 max-w-7xl w-full mx-auto px-5 sm:px-8 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 my-auto pt-6 lg:pt-0">
         
-        {/* Left Column: Brand Typography & Strategy CTAs */}
+        {/* Left Column: Personal Brand Typography & Action */}
         <motion.div
-          initial={{ opacity: 0, x: -35 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 max-w-2xl text-left"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-1 max-w-2xl text-center lg:text-left z-20"
         >
-          {/* Eyebrow Label */}
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/30 mb-6 backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F5D76E] animate-pulse" />
-            <span className="text-[11px] font-mono tracking-[0.25em] text-[#F5D76E] font-bold uppercase">
-              MAYUR VISPUTE • TRADER & MARKET ANALYST
+          {/* Top Label */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/30 mb-4 backdrop-blur-md shadow-[0_0_15px_rgba(212,175,55,0.15)]">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-[11px] font-mono tracking-widest text-[#F5D76E] font-bold uppercase">
+              WELCOME TO MY SPACE
             </span>
           </div>
 
-          {/* Large Hero Editorial Typography */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.05] uppercase">
-            <span>Trade With</span><br />
-            <span className="text-white">Strategy.</span><br />
-            <span className="text-white">Grow With </span>
+          {/* Main Name: Large, bold, and personal */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] uppercase">
+            <span>Hi, I'm </span>
             <span className="text-gold-gradient relative inline-block">
-              Discipline.
-              <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#F5D76E] via-[#D4AF37] to-transparent opacity-80" />
+              Mayur
+            </span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">
+              Vispute
             </span>
           </h1>
 
-          {/* Value Proposition Description */}
-          <p className="mt-6 text-base sm:text-lg text-gray-300 font-light leading-relaxed max-w-lg">
+          {/* Subtitle Identity */}
+          <h2 className="mt-3 text-lg sm:text-2xl font-bold tracking-tight text-cyan-300">
+            Stock Market / Trader / Market Analyst
+          </h2>
+
+          {/* Short Impactful Description */}
+          <p className="mt-4 text-sm sm:text-base text-gray-300 font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
             Market-focused trader specializing in technical analysis, disciplined execution and structured risk management.
           </p>
 
           {/* Action CTAs */}
-          <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-7 sm:mt-9 flex flex-wrap items-center justify-center lg:justify-start gap-4">
             <GoldButton
               variant="gold-filled"
               size="lg"
               icon={ArrowUpRight}
-              onClick={() => onNavigate('performance')}
+              onClick={() => onNavigate('platforms')}
             >
-              View Performance
+              Explore Platforms
             </GoldButton>
 
             <GoldButton
@@ -79,104 +78,105 @@ export default function Hero({ onNavigate }) {
               size="lg"
               onClick={() => onNavigate('contact')}
             >
-              Contact Mayur
+              Connect With Me
             </GoldButton>
           </div>
 
-          {/* Quick Institutional Highlights Bar */}
-          <div className="mt-10 pt-6 border-t border-white/10 flex items-center gap-6 sm:gap-10">
+          {/* Focus Metrics Bar */}
+          <div className="mt-8 pt-5 border-t border-white/10 flex items-center justify-center lg:justify-start gap-6 sm:gap-10 text-left">
             <div>
-              <div className="text-[11px] font-mono tracking-wider text-gray-400 uppercase">Core Discipline</div>
-              <div className="text-sm sm:text-base font-semibold text-[#F5D76E] mt-0.5">Price Action & Risk Control</div>
+              <div className="text-[10px] font-mono tracking-wider text-gray-400 uppercase">Discipline</div>
+              <div className="text-xs sm:text-sm font-semibold text-[#F5D76E] mt-0.5">Price Action & Risk Control</div>
             </div>
-            <div className="h-8 w-[1px] bg-white/10" />
+            <div className="h-7 w-[1px] bg-white/10" />
             <div>
-              <div className="text-[11px] font-mono tracking-wider text-gray-400 uppercase">Focus Markets</div>
-              <div className="text-sm sm:text-base font-semibold text-white mt-0.5">Indices • Gold • Crypto</div>
+              <div className="text-[10px] font-mono tracking-wider text-gray-400 uppercase">Focus Markets</div>
+              <div className="text-xs sm:text-sm font-semibold text-cyan-300 mt-0.5">Bank Nifty • Nifty 50 • Gold</div>
             </div>
           </div>
         </motion.div>
 
-        {/* Right Column: Circular Portrait Composition (Head to Chest Crop + Animated Gold Ring) */}
+        {/* Right Column: Circular Colorful Portrait of Mayur (Visible on First Screen!) */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex-1 flex items-center justify-center max-w-lg w-full"
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="relative flex-1 flex items-center justify-center max-w-md w-full my-4 lg:my-0 z-20"
         >
-          {/* Ambient Warm Gold Glow Radial Backing */}
-          <div className="absolute w-[340px] sm:w-[440px] h-[340px] sm:h-[440px] rounded-full bg-gradient-to-tr from-gold/20 via-gold/10 to-transparent blur-3xl pointer-events-none" />
+          {/* Multi-color Radiant Glow Behind Circle */}
+          <div className="absolute w-[300px] sm:w-[420px] h-[300px] sm:h-[420px] rounded-full bg-gradient-to-tr from-gold/25 via-cyan-500/20 to-purple-600/20 blur-3xl pointer-events-none" />
 
-          {/* Outer Slow Animated Gold Orbital Ring (45s cycle) */}
+          {/* Outer Slow Animated Gold Orbital Ring */}
           <div
-            className="absolute w-[320px] sm:w-[410px] md:w-[450px] h-[320px] sm:h-[410px] md:h-[450px] rounded-full border border-gold/30 border-dashed animate-spin pointer-events-none"
-            style={{ animationDuration: '45s' }}
+            className="absolute w-[290px] sm:w-[390px] h-[290px] sm:h-[390px] rounded-full border-2 border-gold/40 border-dashed animate-spin pointer-events-none"
+            style={{ animationDuration: '40s' }}
           />
 
-          {/* Secondary Concentric Thin Ring */}
+          {/* Secondary Concentric Electric Blue Thin Ring */}
           <div
-            className="absolute w-[300px] sm:w-[380px] md:w-[420px] h-[300px] sm:h-[380px] md:h-[420px] rounded-full border border-[#F5D76E]/20 animate-spin pointer-events-none"
-            style={{ animationDuration: '60s', animationDirection: 'reverse' }}
+            className="absolute w-[270px] sm:w-[365px] h-[270px] sm:h-[365px] rounded-full border border-cyan-400/30 animate-spin pointer-events-none"
+            style={{ animationDuration: '55s', animationDirection: 'reverse' }}
           />
 
-          {/* Main Circular Portrait Frame Container */}
-          <div className="relative w-[270px] sm:w-[340px] md:w-[380px] h-[270px] sm:h-[340px] md:h-[380px] rounded-full p-2 bg-gradient-to-b from-[#1a170e] via-[#0a0a0a] to-[#050505] border border-gold/40 shadow-[0_0_50px_rgba(212,175,55,0.25)]">
+          {/* Main Circular Frame with Solid Clean Border (Cut-to-Cut with NO bottom fade) */}
+          <div className="relative w-[250px] sm:w-[330px] md:w-[360px] h-[250px] sm:h-[330px] md:h-[360px] rounded-full p-2 bg-gradient-to-b from-[#D4AF37] via-[#221C0A] to-[#0A0A0A] shadow-[0_0_45px_rgba(212,175,55,0.35),0_0_25px_rgba(0,210,255,0.2)]">
             
-            {/* Inner Dark Glass Circle with Transparent Cutout Mayur Portrait */}
-            <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-[#111111] to-[#040404] relative flex items-center justify-center">
+            {/* Inner Dark Glass Circle with FULL COLOR Transparent Cutout */}
+            <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-[#141414] to-[#050505] relative flex items-center justify-center border-2 border-gold/60">
               
-              {/* Subtle Ambient Radial Spotlight behind Mayur */}
-              <div className="absolute inset-0 bg-radial-gold opacity-40" />
+              {/* Subtle Radial Warm Light Behind Head */}
+              <div className="absolute inset-0 bg-radial-gold opacity-50" />
 
-              {/* Head-to-Chest Cutout Portrait of Mayur Vispute */}
+              {/* Full Color Cut-to-Cut Mayur Vispute Portrait */}
               <img
                 src="/mayur_cutout.png"
-                alt="Mayur Vispute - Professional Trader"
-                className="w-[92%] h-[92%] object-contain object-top filter brightness-105 contrast-105 z-10 transition-transform duration-700 ease-out hover:scale-105"
+                alt="Mayur Vispute - Stock Market Trader"
+                className="w-full h-full object-cover object-top z-10 filter contrast-105 brightness-105 transition-transform duration-700 hover:scale-105"
                 onError={(e) => {
-                  // Fallback to mayur_portrait.png if cutout is not loaded
                   e.target.src = '/mayur_portrait.png';
                 }}
               />
-
-              {/* Subtle Gold Rim Gradient at the Bottom */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-20 pointer-events-none" />
             </div>
 
-            {/* Glowing Tech Node / Status Indicator */}
-            <div className="absolute top-4 right-4 w-3.5 h-3.5 rounded-full bg-[#F5D76E] shadow-[0_0_15px_#F5D76E] border-2 border-black z-30" />
+            {/* Glowing Tech Node Status Badge */}
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_15px_#00D2FF] border-2 border-black z-30 animate-pulse" />
           </div>
 
-          {/* Floating Data Telemetry Badges */}
-          {FLOATING_CARDS.map((card, idx) => {
-            const CardIcon = iconMap[card.tag] || BarChart2;
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: card.delay }}
-                className={`absolute ${card.position} z-30 hidden sm:flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#0a0a0a]/90 backdrop-blur-xl border border-gold/30 shadow-[0_10px_25px_rgba(0,0,0,0.85),0_0_15px_rgba(212,175,55,0.15)] animate-float-slow`}
-                style={{ animationDelay: `${idx * 1.5}s` }}
-              >
-                <div className="p-1.5 rounded-lg bg-gold/10 border border-gold/30 text-[#F5D76E]">
-                  <CardIcon className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <div className="text-[9px] font-mono font-bold tracking-wider text-gray-400 uppercase">
-                    {card.tag}
-                  </div>
-                  <div className="text-xs font-semibold text-white">
-                    {card.sub}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {/* Floating Data Badges */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="absolute -top-3 -left-3 sm:-left-6 hidden sm:flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-black/85 backdrop-blur-md border border-cyan-500/30 shadow-lg"
+          >
+            <div className="p-1 rounded-md bg-cyan-500/10 text-cyan-300">
+              <BarChart2 className="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <div className="text-[9px] font-mono text-gray-400 uppercase">Analysis</div>
+              <div className="text-xs font-semibold text-white">Price Action</div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="absolute -bottom-3 -right-3 sm:-right-6 hidden sm:flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-black/85 backdrop-blur-md border border-gold/30 shadow-lg"
+          >
+            <div className="p-1 rounded-md bg-gold/10 text-[#F5D76E]">
+              <ShieldCheck className="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <div className="text-[9px] font-mono text-gray-400 uppercase">Risk Protocol</div>
+              <div className="text-xs font-semibold text-white">Disciplined</div>
+            </div>
+          </motion.div>
+
         </motion.div>
       </div>
 
-      {/* 5. Redesigned Wide Floating Financial Market Marquee Strip (Right -> Left, No Prices/Percentages) */}
+      {/* 5. Wide Floating Market Marquee Strip (Right -> Left, Market Names Only) */}
       <FloatingTicker />
     </section>
   );

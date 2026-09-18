@@ -11,7 +11,7 @@ class WebGLErrorBoundary extends Component {
     return { hasError: true };
   }
   componentDidCatch(error, errorInfo) {
-    console.warn("WebGL fallback active:", error, errorInfo);
+    console.warn("WebGL fallback:", error, errorInfo);
   }
   render() {
     if (this.state.hasError) return null;
@@ -19,19 +19,22 @@ class WebGLErrorBoundary extends Component {
   }
 }
 
-// Ultra subtle floating gold atmospheric particles
-function SubtleGoldDust({ mousePosition, count = 120 }) {
+// Vibrant Colorful Market Atmosphere Particles (Gold, Cyan, Blue, Purple, Magenta, Green)
+function ColorfulMarketDust({ mousePosition, count = 160 }) {
   const pointsRef = useRef();
 
   const [positions, colors] = React.useMemo(() => {
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
 
-    const goldPalette = [
-      new THREE.Color('#D4AF37'),
-      new THREE.Color('#F5D76E'),
-      new THREE.Color('#C9A227'),
-      new THREE.Color('#997D20'),
+    // Multi-color vibrant palette
+    const colorPalette = [
+      new THREE.Color('#F5D76E'), // Luxury Gold
+      new THREE.Color('#00D2FF'), // Electric Cyan
+      new THREE.Color('#3A7BD5'), // Electric Blue
+      new THREE.Color('#9B51E0'), // Purple
+      new THREE.Color('#EC4899'), // Magenta
+      new THREE.Color('#10B981'), // Green
     ];
 
     for (let i = 0; i < count; i++) {
@@ -39,7 +42,7 @@ function SubtleGoldDust({ mousePosition, count = 120 }) {
       pos[i * 3 + 1] = (Math.random() - 0.5) * 12;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 8;
 
-      const c = goldPalette[Math.floor(Math.random() * goldPalette.length)];
+      const c = colorPalette[Math.floor(Math.random() * colorPalette.length)];
       col[i * 3] = c.r;
       col[i * 3 + 1] = c.g;
       col[i * 3 + 2] = c.b;
@@ -54,8 +57,8 @@ function SubtleGoldDust({ mousePosition, count = 120 }) {
     const mouseY = mousePosition?.current?.y || 0;
 
     if (pointsRef.current) {
-      pointsRef.current.rotation.y = time * 0.015 + (mouseX * 0.03);
-      pointsRef.current.rotation.x = Math.sin(time * 0.01) * 0.02 - (mouseY * 0.03);
+      pointsRef.current.rotation.y = time * 0.02 + (mouseX * 0.035);
+      pointsRef.current.rotation.x = Math.sin(time * 0.015) * 0.02 - (mouseY * 0.035);
     }
   });
 
@@ -72,10 +75,10 @@ function SubtleGoldDust({ mousePosition, count = 120 }) {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.035}
+        size={0.04}
         vertexColors={true}
         transparent={true}
-        opacity={0.45}
+        opacity={0.65}
         blending={THREE.AdditiveBlending}
         sizeAttenuation={true}
       />
@@ -111,8 +114,9 @@ export default function TradingScene() {
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden">
-      {/* Ambient Gold Radial Center Backing */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-radial-gold opacity-30 pointer-events-none blur-3xl" />
+      {/* Multi-color Ambient Radial Backing Light Highlights */}
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[500px] h-[350px] md:h-[500px] bg-gradient-to-r from-cyan-500/10 via-blue-600/10 to-purple-600/10 opacity-70 pointer-events-none blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-[300px] md:w-[450px] h-[300px] md:h-[450px] bg-gradient-to-r from-gold/15 via-amber-500/10 to-transparent opacity-60 pointer-events-none blur-3xl" />
 
       <WebGLErrorBoundary>
         <Canvas
@@ -126,9 +130,10 @@ export default function TradingScene() {
           className="w-full h-full"
         >
           <Suspense fallback={null}>
-            <ambientLight intensity={0.3} />
-            <directionalLight position={[3, 3, 3]} intensity={1.2} color="#F5D76E" />
-            <SubtleGoldDust mousePosition={mousePosition} count={isMobile ? 60 : 120} />
+            <ambientLight intensity={0.4} />
+            <directionalLight position={[3, 3, 3]} intensity={1.5} color="#00D2FF" />
+            <directionalLight position={[-3, -3, 2]} intensity={1.2} color="#F5D76E" />
+            <ColorfulMarketDust mousePosition={mousePosition} count={isMobile ? 70 : 160} />
           </Suspense>
         </Canvas>
       </WebGLErrorBoundary>
