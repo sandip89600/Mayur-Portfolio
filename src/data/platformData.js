@@ -4,60 +4,54 @@ export const PLATFORM_LINKS = {
   fundingPips: "https://fundingpips.com/",
   deltaExchange: "https://www.delta.exchange/",
   tradingView: "https://www.tradingview.com/",
-  metatrader5: "https://www.metatrader5.com/"
+  metatrader5: "https://www.metatrader5.com/",
+  exness: "https://www.exness.com/",
 };
 
-// Exactly 5 Trading Platforms in exact specified order
+// Trading Platforms matching the reference mobile grid
 export const TRADING_PLATFORMS = [
   {
     id: "dhan",
-    name: "DHAN",
-    category: "Indian Equity & Futures",
-    tagline: "Lightning-Fast Trading for Super Traders",
+    name: "Dhan",
+    isFeatured: true,
     linkKey: "dhan",
-    action: "Open Platform",
-    badge: "Recommended",
-    accentColor: "#8B5CF6", // Dhan Violet/Purple
+    buttonText: "Signup",
+    badge: "FEATURED",
   },
   {
     id: "funding-pips",
-    name: "FUNDING PIPS",
-    category: "Proprietary Trading Firm",
-    tagline: "Institutional Capital for Disciplined Traders",
+    name: "FundingPips",
+    isFeatured: false,
     linkKey: "fundingPips",
-    action: "Explore Prop Firm",
-    badge: "Prop Funding",
-    accentColor: "#3B82F6", // Funding Pips Blue
+    buttonText: "Signup",
   },
   {
     id: "delta-exchange",
-    name: "DELTA EXCHANGE",
-    category: "Crypto Derivatives & Options",
-    tagline: "Advanced Crypto Futures & Options Trading",
+    name: "Delta",
+    isFeatured: false,
     linkKey: "deltaExchange",
-    action: "Trade Crypto Options",
-    badge: "Crypto Derivatives",
-    accentColor: "#00D2FF", // Delta Cyan
+    buttonText: "Signup",
   },
   {
     id: "tradingview",
-    name: "TRADINGVIEW",
-    category: "Charting & Market Analysis",
-    tagline: "Where the World Charts, Chats and Trades",
+    name: "TradingView",
+    isFeatured: false,
     linkKey: "tradingView",
-    action: "Open Charts",
-    badge: "Essential Charts",
-    accentColor: "#10B981", // TradingView Green / Blue
+    buttonText: "Signup",
   },
   {
     id: "metatrader5",
-    name: "METATRADER 5",
-    category: "Multi-Asset Trading Terminal",
-    tagline: "Institutional Forex, Indices & Commodity Engine",
+    name: "MetaTrader 5",
+    isFeatured: false,
     linkKey: "metatrader5",
-    action: "Launch MT5",
-    badge: "Terminal",
-    accentColor: "#F59E0B", // MT5 Amber Gold
+    buttonText: "Signup",
+  },
+  {
+    id: "exness",
+    name: "Exness",
+    isFeatured: false,
+    linkKey: "exness",
+    buttonText: "Signup",
   },
 ];
 

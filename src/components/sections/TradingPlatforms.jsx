@@ -1,193 +1,174 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import GlassCard from '../ui/GlassCard';
-import GoldButton from '../ui/GoldButton';
 import { TRADING_PLATFORMS, PLATFORM_LINKS } from '../../data/platformData';
-import { ExternalLink, Layers, Sparkles, TrendingUp, ShieldCheck, CandlestickChart } from 'lucide-react';
+import { Layers } from 'lucide-react';
 
-// Custom Crisp SVGs / Logos for the 5 platforms
-const PlatformIcons = {
+// Crisp SVGs / Logos matching the reference screenshot design
+const PlatformLogos = {
   dhan: () => (
-    <svg viewBox="0 0 100 100" className="w-10 h-10" fill="none">
-      <rect width="100" height="100" rx="22" fill="#1C1438" />
-      <circle cx="50" cy="50" r="32" stroke="#8B5CF6" strokeWidth="4" strokeDasharray="6 4" />
-      {/* Dhan Stylized 'D' / Indian Rupee Bolt */}
-      <path d="M35 30H55C66 30 72 38 72 50C72 62 66 70 55 70H35V30Z" fill="url(#dhanGrad)" />
-      <path d="M46 42H54C58 42 61 45 61 50C61 55 58 58 54 58H46V42Z" fill="#1C1438" />
-      <defs>
-        <linearGradient id="dhanGrad" x1="35" y1="30" x2="72" y2="70">
-          <stop offset="0%" stopColor="#A78BFA" />
-          <stop offset="100%" stopColor="#7C3AED" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#12162A] border border-cyan-400/40 flex items-center justify-center shadow-[0_0_15px_rgba(0,210,255,0.25)]">
+      {/* Dhan / Modern 'd' Monogram */}
+      <svg viewBox="0 0 100 100" className="w-7 h-7 sm:w-8 sm:h-8" fill="none">
+        <path d="M30 25H55C68 25 76 34 76 50C76 66 68 75 55 75H30V25Z" fill="url(#dhanGrad)" />
+        <path d="M42 38H53C59 38 63 42 63 50C63 58 59 62 53 62H42V38Z" fill="#12162A" />
+        <defs>
+          <linearGradient id="dhanGrad" x1="30" y1="25" x2="76" y2="75">
+            <stop offset="0%" stopColor="#00D2FF" />
+            <stop offset="100%" stopColor="#3A7BD5" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
   ),
   'funding-pips': () => (
-    <svg viewBox="0 0 100 100" className="w-10 h-10" fill="none">
-      <rect width="100" height="100" rx="22" fill="#0E1A38" />
-      {/* Funding Pips Crown / Vault Icon */}
-      <path d="M30 68L25 38L42 48L50 30L58 48L75 38L70 68H30Z" fill="url(#fpGrad)" stroke="#60A5FA" strokeWidth="2" />
-      <circle cx="50" cy="30" r="4" fill="#F5D76E" />
-      <circle cx="25" cy="38" r="3" fill="#60A5FA" />
-      <circle cx="75" cy="38" r="3" fill="#60A5FA" />
-      <defs>
-        <linearGradient id="fpGrad" x1="25" y1="30" x2="75" y2="68">
-          <stop offset="0%" stopColor="#3B82F6" />
-          <stop offset="100%" stopColor="#1D4ED8" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#00A389] flex items-center justify-center p-2 shadow-md">
+      {/* Green/Teal Connected Nodes Logo */}
+      <svg viewBox="0 0 100 100" className="w-8 h-8" fill="none">
+        <circle cx="35" cy="30" r="10" fill="white" />
+        <circle cx="35" cy="50" r="10" fill="white" />
+        <circle cx="35" cy="70" r="10" fill="white" />
+        <circle cx="65" cy="30" r="10" stroke="white" strokeWidth="4" />
+        <circle cx="65" cy="50" r="10" stroke="white" strokeWidth="4" />
+        <circle cx="65" cy="70" r="10" stroke="white" strokeWidth="4" />
+      </svg>
+    </div>
   ),
   'delta-exchange': () => (
-    <svg viewBox="0 0 100 100" className="w-10 h-10" fill="none">
-      <rect width="100" height="100" rx="22" fill="#082230" />
-      {/* Delta Triangle Prism */}
-      <path d="M50 22L80 74H20L50 22Z" stroke="url(#deltaGrad)" strokeWidth="5" fill="rgba(0,210,255,0.15)" strokeLinejoin="round" />
-      <path d="M50 38L68 70H32L50 38Z" fill="url(#deltaGrad)" opacity="0.8" />
-      <defs>
-        <linearGradient id="deltaGrad" x1="20" y1="22" x2="80" y2="74">
-          <stop offset="0%" stopColor="#00D2FF" />
-          <stop offset="100%" stopColor="#0284C7" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div className="w-20 h-10 sm:w-24 sm:h-11 rounded-lg bg-white flex items-center justify-center px-2 py-1 shadow-md">
+      {/* Delta Exchange official look */}
+      <svg viewBox="0 0 120 40" className="w-full h-full" fill="none">
+        <path d="M12 28L22 10L32 28H12Z" fill="#00D2FF" />
+        <path d="M18 28L22 20L26 28H18Z" fill="#0284C7" />
+        <text x="38" y="25" fill="#0F172A" fontSize="16" fontWeight="bold" fontFamily="sans-serif">Delta</text>
+      </svg>
+    </div>
   ),
   tradingview: () => (
-    <svg viewBox="0 0 100 100" className="w-10 h-10" fill="none">
-      <rect width="100" height="100" rx="22" fill="#0F241E" />
-      {/* TradingView Clouds / Chart Bars */}
-      <rect x="26" y="48" width="10" height="26" rx="3" fill="#34D399" />
-      <rect x="44" y="32" width="10" height="42" rx="3" fill="#10B981" />
-      <rect x="62" y="42" width="10" height="32" rx="3" fill="#059669" />
-      <path d="M22 42L44 26L64 36L78 22" stroke="#6EE7B7" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div className="w-20 h-10 sm:w-24 sm:h-11 rounded-lg bg-[#0F172A] border border-white/15 flex items-center justify-center px-2 py-1 shadow-md">
+      {/* TradingView Logo */}
+      <svg viewBox="0 0 120 40" className="w-full h-full" fill="none">
+        <rect x="12" y="20" width="6" height="12" rx="1.5" fill="#38BDF8" />
+        <rect x="22" y="12" width="6" height="20" rx="1.5" fill="#38BDF8" />
+        <rect x="32" y="16" width="6" height="16" rx="1.5" fill="#38BDF8" />
+        <text x="44" y="25" fill="white" fontSize="13" fontWeight="bold" fontFamily="sans-serif">Charts</text>
+      </svg>
+    </div>
   ),
   metatrader5: () => (
-    <svg viewBox="0 0 100 100" className="w-10 h-10" fill="none">
-      <rect width="100" height="100" rx="22" fill="#2A1B07" />
-      {/* MT5 Emblem */}
-      <circle cx="50" cy="50" r="30" stroke="#F59E0B" strokeWidth="3" />
-      <text x="50" y="58" textAnchor="middle" fill="#FBBF24" fontSize="26" fontWeight="bold" fontFamily="monospace">MT5</text>
-    </svg>
+    <div className="w-20 h-10 sm:w-24 sm:h-11 rounded-lg bg-[#18181B] border border-amber-500/30 flex items-center justify-center px-2 py-1 shadow-md">
+      {/* MetaTrader 5 / XM styled */}
+      <div className="flex items-center gap-1.5">
+        <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+        <span className="text-white font-mono font-bold text-xs sm:text-sm tracking-wider">MT5</span>
+      </div>
+    </div>
+  ),
+  exness: () => (
+    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-[#FBBF24] flex items-center justify-center shadow-md">
+      {/* Exness Yellow Square with 'ex' */}
+      <span className="text-black font-extrabold text-xl sm:text-2xl tracking-tighter font-sans">ex</span>
+    </div>
   ),
 };
 
 export default function TradingPlatforms() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 25 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
-
   return (
     <section
       id="platforms"
-      className="relative w-full py-24 sm:py-32 bg-[#040404] overflow-hidden border-t border-gold/15"
+      className="relative w-full py-20 sm:py-28 bg-[#040404] overflow-hidden border-t border-gold/15"
     >
-      {/* Background glow highlights */}
-      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-radial-gold opacity-20 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-tr from-cyan-600/10 via-purple-600/10 to-transparent blur-3xl pointer-events-none" />
+      {/* Ambient Radial Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-radial-gold opacity-20 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-16 sm:mb-20">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/10 border border-gold/25 mb-4">
             <Layers className="w-3.5 h-3.5 text-[#F5D76E]" />
             <span className="text-[11px] font-mono tracking-widest text-[#F5D76E] uppercase font-semibold">
-              TRUSTED BROKERS & ECOSYSTEM
+              OFFICIAL BROKERS & PLATFORMS
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white uppercase leading-tight">
-            My Trading <span className="text-gold-gradient">Platforms</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white uppercase leading-tight">
+            Trading <span className="text-gold-gradient">Platforms</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-300 font-light leading-relaxed">
-            The official platforms, brokers, and charting engines I rely on daily for disciplined market execution, high-leverage prop trading, and institutional analytics.
+          <p className="mt-3 text-xs sm:text-sm text-gray-400 font-light max-w-md mx-auto">
+            Direct access to verified brokers, prop firm challenges, and institutional charting engines.
           </p>
         </div>
 
-        {/* 5 Platforms Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-        >
+        {/* 2-Column Mobile Grid Matching Client Reference Screenshot */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 md:gap-6 max-w-2xl sm:max-w-3xl mx-auto">
           {TRADING_PLATFORMS.map((platform, idx) => {
-            const IconComponent = PlatformIcons[platform.id] || PlatformIcons.dhan;
+            const LogoComponent = PlatformLogos[platform.id] || PlatformLogos.dhan;
             const targetUrl = PLATFORM_LINKS[platform.linkKey] || "https://dhan.co/";
+            const isFeatured = platform.isFeatured;
 
             return (
-              <motion.div key={platform.id} variants={itemVariants}>
-                <GlassCard className="h-full flex flex-col justify-between p-7 group hover:border-gold/60 transition-all duration-300">
-                  <div>
-                    {/* Top Header Row with Icon & Badge */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="p-1 rounded-2xl bg-black/50 border border-white/10 group-hover:border-gold/40 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] transition-all duration-300">
-                        <IconComponent />
-                      </div>
-                      
-                      <span className="text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-full bg-gold/10 text-[#F5D76E] border border-gold/30 uppercase font-semibold">
+              <motion.div
+                key={platform.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="flex flex-col"
+              >
+                <div
+                  className={`
+                    relative rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-between text-center h-full transition-all duration-300 group
+                    ${
+                      isFeatured
+                        ? 'bg-gradient-to-b from-[#09152a] to-[#060b16] border border-cyan-400/50 shadow-[0_0_25px_rgba(0,210,255,0.25)] hover:border-cyan-400'
+                        : 'bg-[#0e0e0e] border border-white/10 hover:border-gold/40 shadow-[0_8px_20px_rgba(0,0,0,0.8)]'
+                    }
+                  `}
+                >
+                  {/* Top Featured Badge if applicable */}
+                  {isFeatured && (
+                    <div className="w-full flex items-center justify-center gap-2 mb-2">
+                      <span className="h-[1px] w-4 sm:w-6 bg-cyan-400/40" />
+                      <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-cyan-300 font-bold uppercase">
                         {platform.badge}
                       </span>
+                      <span className="h-[1px] w-4 sm:w-6 bg-cyan-400/40" />
                     </div>
+                  )}
 
-                    {/* Platform Title & Category */}
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-wide group-hover:text-[#F5D76E] transition-colors">
-                      {platform.name}
-                    </h3>
-                    <p className="text-xs font-mono text-gray-400 mt-1 mb-4">
-                      {platform.category}
-                    </p>
-
-                    {/* Tagline / Brief Description */}
-                    <p className="text-sm text-gray-300 font-light leading-relaxed mb-6">
-                      {platform.tagline}
-                    </p>
+                  {/* Centered Logo Container */}
+                  <div className={`my-auto py-2 flex items-center justify-center ${!isFeatured ? 'pt-2' : ''}`}>
+                    <LogoComponent />
                   </div>
 
-                  {/* Visit / Open Button */}
-                  <div className="pt-5 border-t border-white/10 mt-auto">
+                  {/* Platform Title */}
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-white tracking-wide my-3 group-hover:text-[#F5D76E] transition-colors">
+                    {platform.name}
+                  </h3>
+
+                  {/* Bottom Rounded Solid Button: Blue for Featured, Amber/Gold for Others */}
+                  <div className="w-full pt-1">
                     <a
                       href={targetUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#111111] hover:bg-gradient-to-r hover:from-[#F5D76E] hover:to-[#D4AF37] hover:text-black text-gray-200 border border-white/10 hover:border-gold font-mono text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-md group-hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+                      className={`
+                        w-full block py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl font-sans text-xs sm:text-sm font-bold tracking-wide text-center transition-all duration-300 cursor-pointer select-none shadow-md
+                        ${
+                          isFeatured
+                            ? 'bg-[#0072FF] hover:bg-[#0088FF] text-white shadow-[0_0_15px_rgba(0,114,255,0.4)] hover:shadow-[0_0_20px_rgba(0,114,255,0.6)]'
+                            : 'bg-[#FDB813] hover:bg-[#F59E0B] text-black shadow-[0_0_12px_rgba(253,184,19,0.3)] hover:shadow-[0_0_18px_rgba(253,184,19,0.5)]'
+                        }
+                      `}
                     >
-                      <span>{platform.action}</span>
-                      <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      {platform.buttonText || "Signup"}
                     </a>
                   </div>
-                </GlassCard>
+
+                </div>
               </motion.div>
             );
           })}
-        </motion.div>
-
-        {/* Security & Risk Transparency Disclaimer */}
-        <div className="mt-14 p-5 rounded-xl bg-black/60 border border-gold/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-gray-400">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="w-5 h-5 text-[#F5D76E] flex-shrink-0" />
-            <span>Always verify platform credentials, regulations, and risk disclosures prior to trading.</span>
-          </div>
-          <div className="text-[#F5D76E] font-semibold">
-            100% INDEPENDENT SETUPS
-          </div>
         </div>
 
       </div>
