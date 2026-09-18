@@ -43,7 +43,7 @@ export default function Hero({ onNavigate }) {
           {/* Main Name: Large, bold, and personal */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] uppercase">
             <span>Hi, I'm </span>
-            <span className="text-gold-gradient relative inline-block">
+            <span className="text-white inline-block">
               Mayur
             </span>
             <br />
