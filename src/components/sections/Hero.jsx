@@ -40,14 +40,25 @@ export default function Hero({ onNavigate }) {
             </span>
           </div>
 
-          {/* Main Name: Large, bold, and personal */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] uppercase">
-            <span>Hi, I'm </span>
-            <span className="text-white inline-block">
-              Mayur
+          {/* Main Name: Golden text-stroke outline */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] uppercase select-none">
+            <span
+              className="text-white inline-block"
+              style={{
+                WebkitTextStroke: '1.5px #F5D76E',
+                textShadow: '0 0 25px rgba(212,175,55,0.4)',
+              }}
+            >
+              Hi, I'm Mayur
             </span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">
+            <span
+              className="text-white inline-block"
+              style={{
+                WebkitTextStroke: '1.5px #D4AF37',
+                textShadow: '0 0 25px rgba(212,175,55,0.4)',
+              }}
+            >
               Vispute
             </span>
           </h1>
